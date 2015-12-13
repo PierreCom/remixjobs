@@ -132,7 +132,7 @@ if(bitDescription != 0){
     console.log('Connection established to', url);
 
     // Get the documents collection
-    var collection = db.collection('names');
+    var collection = db.collection('jobs');
 
     // Insert jobs from RemixJobs website.
      //var user1 = {name: 'modulus admin', age: 42, roles: ['admin', 'moderator', 'user']};

@@ -14,7 +14,7 @@ var port     = process.env.PORT || 8080; // set our port
 
 var mongoose   = require('mongoose');
 mongoose.connect('mongodb://localhost/remixjobs'); // connect to our database
-var Bear     = require('./app/models/bear');
+var Jobs     = require('./app/models/jobs');
 
 // ROUTES FOR OUR API
 // =============================================================================
@@ -31,75 +31,96 @@ router.use(function(req, res, next) {
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-	res.json({ message: 'hooray! welcome to our api!' });
+	res.json({ message: 'Welcome to RemixJobs api!' });
 });
 
-// on routes that end in /bears
+// Routes with Jobs
 // ----------------------------------------------------
-router.route('/bears')
+router.route('/jobs')
 
-	// create a bear (accessed at POST http://localhost:8080/bears)
-	.post(function(req, res) {
+  // create a new job (with Postman:  POST http://localhost:8080/jobs)
+  // ---------------------------------------------------- OKKK
+  .post(function(req, res) {
 
-		var bear = new Bear();		// create a new instance of the Bear model
-		bear.name = req.body.name;  // set the bears name (comes from the request)
+  var job = new Jobs();		// create a new instance of the Bear model
+  job.Tags = req.body.Tags;
+  job.Dates = req.body.Dates;
+  job.Contract = req.body.Contract;
+  job.Other_description = req.body.Other_description;
+  job.Description = req.body.Description;
+  job.Category = req.body.Category;
+  job.Localization = req.body.Localization;
+  job.Company = req.body.Company;
+  job.Job_title = req.body.Job_title;
 
-		bear.save(function(err) {
-			if (err)
-				res.send(err);
+  job.save(function(err) {
+    if (err)
+      res.send(err);
 
-			res.json({ message: 'Bear created!' });
+			res.json({ message: 'New Job created!' });
 		});
 
 
 	})
 
-	// get all the bears (accessed at GET http://localhost:8080/api/bears)
-	.get(function(req, res) {
-		Bear.find(function(err, bears) {
+	// get all jobs (with Postman:  GET http://localhost:8080/api/jobs)
+  // ---------------------------------------------------- OKKK
+  .get(function(req, res) {
+		Jobs.find(function(err, job) {
 			if (err)
 				res.send(err);
 
-			res.json(bears);
+			res.json(job);
 		});
 	});
 
-// on routes that end in /bears/:bear_id
-// ----------------------------------------------------
-router.route('/bears/:bear_id')
 
-	// get the bear with that id
+// Return information of a job (with Postman:  GET http://localhost:8080/api/jobs/job_id)
+// ---------------------------------------------------- OKKK
+router.route('/jobs/:job_id')
+
 	.get(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Jobs.findById(req.params.job_id, function(err, job) {
 			if (err)
 				res.send(err);
-			res.json(bear);
+			res.json(job);
 		});
 	})
 
-	// update the bear with this id
+  // Update a job (with Postman:  PUT http://localhost:8080/api/jobs/job_id)
+	// ----------------------------------------------------  OKKK
 	.put(function(req, res) {
-		Bear.findById(req.params.bear_id, function(err, bear) {
+		Jobs.findById(req.params.job_id, function(err, job) {
 
 			if (err)
 				res.send(err);
 
-			bear.name = req.body.name;
-			bear.save(function(err) {
+        job.Tags = req.body.Tags;
+        job.Dates = req.body.Dates;
+        job.Contract = req.body.Contract;
+        job.Other_description = req.body.Other_description;
+        job.Description = req.body.Description;
+        job.Category = req.body.Category;
+        job.Localization = req.body.Localization;
+        job.Company = req.body.Company;
+        job.Job_title = req.body.Job_title;
+
+			job.save(function(err) {
 				if (err)
 					res.send(err);
 
-				res.json({ message: 'Bear updated!' });
+				res.json({ message: 'Job updated!' });
 			});
 
 		});
 	})
 
-	// delete the bear with this id
+	// Delete a Job (with Postman:  DELETE http://localhost:8080/api/jobs/job_id)
+  // ---------------------------------------------------- OKKK
 	.delete(function(req, res) {
-		Bear.remove({
-			_id: req.params.bear_id
-		}, function(err, bear) {
+		Jobs.remove({
+			_id: req.params.job_id
+		}, function(err, job) {
 			if (err)
 				res.send(err);
 
