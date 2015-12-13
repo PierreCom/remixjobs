@@ -136,13 +136,17 @@ if(bitDescription != 0){
 
     // Insert jobs from RemixJobs website.
      //var user1 = {name: 'modulus admin', age: 42, roles: ['admin', 'moderator', 'user']};
-        collection.insert([jobs[1]], function (err, result) {
-          if (err) {
-            console.log(err);
-          }
-          //Close connection
-          db.close();
+     for(var i = 0; i < jobs.length; i++)
+     {
+       collection.insert([jobs[i]], function (err, result) {
+         if (err) {
+           console.log(err);
+         }
+         //Close connection
+         db.close();
+
         });
+     }
 
 
   }
